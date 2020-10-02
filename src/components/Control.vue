@@ -10,7 +10,10 @@
             v-on:click="rollDice"
             ><i class="ion-ios-loop"></i>Roll Dice</button>
 
-        <button class="control btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+        <button 
+            class="control btn-hold"
+            v-on:click="holdScore"
+        ><i class="ion-ios-download-outline"></i>Hold</button>
 
         <input type="number" placeholder="Final score" class="final-score" />
     </div>
@@ -31,6 +34,9 @@ export default {
       rollDice() {
         console.log('inside');
         this.$emit('handleRollDice');
+      },
+      holdScore: function() {
+        this.$emit('handleHoldScore', '');
       }
     }
 };

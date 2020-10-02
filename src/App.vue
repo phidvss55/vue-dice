@@ -11,6 +11,7 @@
         <Control
             v-on:handleRollDice="handleRollDice"
             v-on:handleNewGame="handleNewGame"
+            v-on:handleHoldScore="handleHoldScore"
         />
 
         <Dice
@@ -82,6 +83,20 @@ export default {
             this.currentScore = 0
             this.scorePlayer = [0, 0]
         },
+        handleHoldScore: function() {
+            if(this.isPlaying) {
+                let { scorePlayer, activePlayer, currentScore } = this;
+                // copy so diem hien tai
+                // let cloneScorePlayer = [...scorePlayer];
+                // copy so diem hien tai
+                let scoreOld = scorePlayer[activePlayer];
+                // diem so hien tai cua nguoi choi = diem cu + diem moi
+                this.scorePlayer[activePlayer] = scoreOld + currentScore;
+                console.log(scorePlayer); 
+            } else {
+                alert('Please, click on New Game button for a New Game')
+            }
+        }
     }
 };
 </script>
