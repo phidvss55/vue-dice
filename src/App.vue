@@ -9,11 +9,11 @@
         />
 
         <Control
+            v-on:handleRollDice="handleRollDice"
             v-on:handleNewGame="handleNewGame"
         />
 
         <Dice
-            v-on:handleRollDice="handleRollDice"
             v-bind:dices="dices"
         />
 
@@ -52,6 +52,26 @@ export default {
         PopupRule
     },
     methods: {
+        nextPlayer() {
+            this.activePlayer = this.activePlayer === 0 ? 1 : 0
+            this.currentScore = 0
+        },
+        handleRollDice() {
+            if(this.isPlaying) {
+                var dice1 = Math.floor(Math.random() * 6) + 1;
+                var dice2 = Math.floor(Math.random() * 6) + 1;
+
+                this.dices = [dice1, dice2]
+
+                if(dice1 == 1 || dice2 == 1) {
+                    this.nextPlayer()
+                } else {
+                    this.currentScore = this.currentScore + dice1 + dice2;
+                }
+            } else {
+                alert('Please click on New Game Button for a new game :D')
+            }
+        },
         handleNewGame() {
             this.isOpenPopup = true;
         },
@@ -62,10 +82,6 @@ export default {
             this.currentScore = 0
             this.scorePlayer = [0, 0]
         },
-        handleRollDice() {
-            console.log('asdf');
-
-        }
     }
 };
 </script>

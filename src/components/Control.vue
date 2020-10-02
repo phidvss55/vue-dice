@@ -29,8 +29,8 @@ export default {
         this.$emit('handleNewGame', '');
       },
       rollDice() {
-        console.log('asdfasdf');
-        this.$emit('handleRollDice', '')
+        console.log('inside');
+        this.$emit('handleRollDice');
       }
     }
 };
