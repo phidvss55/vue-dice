@@ -2,9 +2,25 @@
     <div id="app">
         <div class="wrapper clearfix">
         
-        <Players />
-        <Control />
-        <Dice />
+        <Players 
+            v-bind:scorePlayer="scorePlayer"
+            v-bind:currentScore="currentScore"
+            v-bind:activePlayer="activePlayer"
+        />
+
+        <Control
+            v-on:handleNewGame="handleNewGame"
+        />
+
+        <Dice
+            v-on:handleRollDice="handleRollDice"
+            v-bind:dices="dices"
+        />
+
+        <PopupRule
+            v-on:confirmEvent="confirmEvent"
+            v-bind:isOpenPopup="isOpenPopup"
+        />
 
         </div>
     </div>
@@ -14,15 +30,43 @@
 
 import Players from './components/Player'
 import Control from './components/Control'
-import Dice from './components/Dice'
+import Dice from './components/Dice' 
+import PopupRule from './components/PopupRule'
 
 export default {
     name: "App",
+    data () {
+        return {
+            isPlaying: false,
+            isOpenPopup: false,
+            dices: [1, 5],
+            activePlayer: 1,
+            currentScore: 30,
+            scorePlayer: [13, 30]
+        } 
+    },
     components: {
         Players,
         Control,
-        Dice
+        Dice,
+        PopupRule
     },
+    methods: {
+        handleNewGame() {
+            this.isOpenPopup = true;
+        },
+        confirmEvent() {
+            this.isPlaying = true;
+            this.isOpenPopup = false;
+            this.activePlayer = 0
+            this.currentScore = 0
+            this.scorePlayer = [0, 0]
+        },
+        handleRollDice() {
+            console.log('asdf');
+
+        }
+    }
 };
 </script>
 

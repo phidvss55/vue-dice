@@ -1,14 +1,16 @@
 <template>
     <div class="wrapper-control">
-        <button class="control btn-new">
-        <i class="ion-ios-plus-outline"></i>New game
-        </button>
-        <button class="control btn-roll">
-        <i class="ion-ios-loop"></i>Roll dice
-        </button>
-        <button class="control btn-hold">
-        <i class="ion-ios-download-outline"></i>Hold
-        </button>
+        <button 
+            class="control btn-new"
+            v-on:click="newGame"
+            ><i class="ion-ios-plus-outline"></i>New Game</button>
+
+        <button
+            class="control btn-roll"
+            v-on:click="rollDice"
+            ><i class="ion-ios-loop"></i>Roll Dice</button>
+
+        <button class="control btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
 
         <input type="number" placeholder="Final score" class="final-score" />
     </div>
@@ -17,11 +19,20 @@
 <script>
 export default {
     name: "players",
-    data() {
+    data () {
         return {
             
         };
     },
+    methods: {
+      newGame() {
+        this.$emit('handleNewGame', '');
+      },
+      rollDice() {
+        console.log('asdfasdf');
+        this.$emit('handleRollDice', '')
+      }
+    }
 };
 </script>
 
