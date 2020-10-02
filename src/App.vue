@@ -9,6 +9,8 @@
         />
 
         <Control
+            v-bind:finalScore="finalScore"
+            v-on:handleChangeFinalScore="handleChangeFinalScore"
             v-on:handleRollDice="handleRollDice"
             v-on:handleNewGame="handleNewGame"
             v-on:handleHoldScore="handleHoldScore"
@@ -43,7 +45,8 @@ export default {
             dices: [1, 5],
             activePlayer: 1,
             currentScore: 30,
-            scorePlayer: [13, 30]
+            scorePlayer: [13, 30],
+            finalScore: 100
         } 
     },
     components: {
@@ -53,6 +56,14 @@ export default {
         PopupRule
     },
     methods: {
+        handleChangeFinalScore: function(number) {
+            number = parseInt(number)
+            if(isNaN(number)) {
+                this.finalScore = '';
+            } else {
+                this.finalScore = number
+            }
+        }, 
         nextPlayer() {
             this.activePlayer = this.activePlayer === 0 ? 1 : 0
             this.currentScore = 0
@@ -65,6 +76,7 @@ export default {
                 this.dices = [dice1, dice2]
 
                 if(dice1 == 1 || dice2 == 1) {
+                    
                     this.nextPlayer()
                 } else {
                     this.currentScore = this.currentScore + dice1 + dice2;
@@ -86,13 +98,11 @@ export default {
         handleHoldScore: function() {
             if(this.isPlaying) {
                 let { scorePlayer, activePlayer, currentScore } = this;
-                // copy so diem hien tai
-                // let cloneScorePlayer = [...scorePlayer];
-                // copy so diem hien tai
                 let scoreOld = scorePlayer[activePlayer];
-                // diem so hien tai cua nguoi choi = diem cu + diem moi
-                this.scorePlayer[activePlayer] = scoreOld + currentScore;
-                console.log(scorePlayer); 
+                // let cloneScorePlayer = [...scorePlayer];
+                this.$set(this.scorePlayer, activePlayer, scoreOld + currentScore);
+
+                this.nextPlayer(); 
             } else {
                 alert('Please, click on New Game button for a New Game')
             }

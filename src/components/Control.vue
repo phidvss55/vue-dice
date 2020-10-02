@@ -15,25 +15,37 @@
             v-on:click="holdScore"
         ><i class="ion-ios-download-outline"></i>Hold</button>
 
-        <input type="number" placeholder="Final score" class="final-score" />
+        <input
+            v-bind:value="finalScore"
+            v-on:input="handleInput"
+            type="text"
+            placeholder="Final score" 
+            class="final-score"
+        >
     </div>
 </template>
 
 <script>
 export default {
-    name: "players",
+    name: "control",
+    props: {
+        finalScore: { type: Number, default: 100 },
+    },
     data () {
         return {
-            
+            valueDemo: 100,
         };
     },
     methods: {
+      handleInput(e) {
+        this.valueDemo = e.target.value
+        this.$emit('handleChangeFinalScore', this.valueDemo);
+      },
       newGame() {
         this.$emit('handleNewGame', '');
       },
       rollDice() {
-        console.log('inside');
-        this.$emit('handleRollDice');
+        this.$emit('handleRollDice', '');
       },
       holdScore: function() {
         this.$emit('handleHoldScore', '');
