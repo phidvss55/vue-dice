@@ -3,12 +3,14 @@
         <div class="wrapper clearfix">
         
         <Players 
+            v-bind:isWinner="isWinner"
             v-bind:scorePlayer="scorePlayer"
             v-bind:currentScore="currentScore"
             v-bind:activePlayer="activePlayer"
         />
 
         <Control
+            v-bind:isPlayin="isPlaying"
             v-bind:finalScore="finalScore"
             v-on:handleChangeFinalScore="handleChangeFinalScore"
             v-on:handleRollDice="handleRollDice"
@@ -42,11 +44,11 @@ export default {
         return {
             isPlaying: false,
             isOpenPopup: false,
-            dices: [1, 5],
-            activePlayer: 1,
-            currentScore: 30,
-            scorePlayer: [13, 30],
-            finalScore: 100
+            dices: [0, 0],
+            activePlayer: 0,
+            currentScore: 0,
+            scorePlayer: [0, 0],
+            finalScore: 10
         } 
     },
     components: {
@@ -54,6 +56,17 @@ export default {
         Control,
         Dice,
         PopupRule
+    },
+    computed: {
+        // function auto run when data inside changed
+        isWinner () {
+            let { scorePlayer, finalScore } = this;
+            if(scorePlayer[0] >= finalScore || scorePlayer[1] >= finalScore ) {
+                this.isPlaying = false;
+                return true;
+            }
+            return false;
+        }
     },
     methods: {
         handleChangeFinalScore: function(number) {
@@ -76,7 +89,6 @@ export default {
                 this.dices = [dice1, dice2]
 
                 if(dice1 == 1 || dice2 == 1) {
-                    
                     this.nextPlayer()
                 } else {
                     this.currentScore = this.currentScore + dice1 + dice2;
@@ -102,7 +114,9 @@ export default {
                 // let cloneScorePlayer = [...scorePlayer];
                 this.$set(this.scorePlayer, activePlayer, scoreOld + currentScore);
 
-                this.nextPlayer(); 
+                if(!this.isWinner) {
+                    this.nextPlayer(); 
+                }
             } else {
                 alert('Please, click on New Game button for a New Game')
             }

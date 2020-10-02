@@ -1,56 +1,55 @@
 <template>
-    <div class="wrapper-control">
-        <button 
-            class="control btn-new"
-            v-on:click="newGame"
-            ><i class="ion-ios-plus-outline"></i>New Game</button>
+  <div class="wrapper-control">
+    <button class="control btn-new" v-on:click="newGame">
+      <i class="ion-ios-plus-outline"></i>New Game
+    </button>
 
-        <button
-            class="control btn-roll"
-            v-on:click="rollDice"
-            ><i class="ion-ios-loop"></i>Roll Dice</button>
+    <button class="control btn-roll" v-on:click="rollDice">
+      <i class="ion-ios-loop"></i>Roll Dice
+    </button>
 
-        <button 
-            class="control btn-hold"
-            v-on:click="holdScore"
-        ><i class="ion-ios-download-outline"></i>Hold</button>
+    <button class="control btn-hold" v-on:click="holdScore">
+      <i class="ion-ios-download-outline"></i>Hold
+    </button>
 
-        <input
-            v-bind:value="finalScore"
-            v-on:input="handleInput"
-            type="text"
-            placeholder="Final score" 
-            class="final-score"
-        >
-    </div>
+    <input
+      v-bind:disabled="isPlaying"
+      v-bind:value="finalScore"
+      v-on:input="handleInput"
+      type="text"
+      placeholder="Final score"
+      class="final-score"
+    />
+  </div>
 </template>
 
 <script>
 export default {
-    name: "control",
-    props: {
-        finalScore: { type: Number, default: 100 },
+  name: "control",
+  props: {
+    finalScore: { type: Number, default: 100 },
+    isPlaying: { type: Boolean, default: false }
+  },
+  data() {
+    return {
+      valueDemo: 100,
+    };
+  },
+  methods: {
+    handleInput(e) {
+      this.valueDemo = e.target.value;
+      this.$emit("handleChangeFinalScore", this.valueDemo);
     },
-    data () {
-        return {
-            valueDemo: 100,
-        };
+    newGame() {
+      this.$emit("handleNewGame", "");
     },
-    methods: {
-      handleInput(e) {
-        this.valueDemo = e.target.value
-        this.$emit('handleChangeFinalScore', this.valueDemo);
-      },
-      newGame() {
-        this.$emit('handleNewGame', '');
-      },
-      rollDice() {
-        this.$emit('handleRollDice', '');
-      },
-      holdScore: function() {
-        this.$emit('handleHoldScore', '');
-      }
-    }
+    rollDice() {
+      this.$emit("handleRollDice", "");
+    },
+    holdScore: function () {
+      this.$emit("handleHoldScore", "");
+    },
+  },
 };
 </script>
 
