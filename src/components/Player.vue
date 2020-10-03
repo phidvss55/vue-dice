@@ -17,7 +17,7 @@
                 winner: activePlayer == 1 && this.isWinner
             }">
             <div class="player-name">{{ getNamePlayer(1) }}</div>
-            <div class="player-score">{{  scorePlayer[1] }}</div>
+            <div class="player-score">{{ scorePlayer[1] }}</div>
             <div class="player-current-box">
             <div class="player-current-label">Current</div>
             <div class="player-current-score">{{ activePlayer == 1 ? currentScore : 0 }}</div>
@@ -46,6 +46,7 @@ export default {
 
             if(this.activePlayer == index && this.isWinner) {
                 defaultName = 'Winner';
+                alert(`Player ${this.activePlayer} has won the game!`)
             }
             return defaultName;
         }
@@ -54,7 +55,6 @@ export default {
 </script>
 
 <style>
-
 .player-panel {
     width: 50%;
     float: left;

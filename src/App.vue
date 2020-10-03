@@ -10,7 +10,7 @@
         />
 
         <Control
-            v-bind:isPlayin="isPlaying"
+            v-bind:isPlaying="isPlaying"
             v-bind:finalScore="finalScore"
             v-on:handleChangeFinalScore="handleChangeFinalScore"
             v-on:handleRollDice="handleRollDice"
@@ -59,13 +59,20 @@ export default {
     },
     computed: {
         // function auto run when data inside changed
-        isWinner () {
+        isWinner: function () {
             let { scorePlayer, finalScore } = this;
             if(scorePlayer[0] >= finalScore || scorePlayer[1] >= finalScore ) {
-                this.isPlaying = false;
                 return true;
             }
             return false;
+        }
+    },
+    watch: {
+        isWinner: {
+            deep: true,
+            handler: function(val) {
+                this.isPlaying = (val) ? false : true;
+            }
         }
     },
     methods: {
